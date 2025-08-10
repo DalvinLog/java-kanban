@@ -133,6 +133,7 @@ public class TaskManager {
     public void deleteAllSubtasks() {
         subtasks.clear();
         for (Epic epic: epics.values()) {
+            epic.deleteAllSubtaskId();
             epic.setStatus(IssueStatuses.NEW);
         }
     }
