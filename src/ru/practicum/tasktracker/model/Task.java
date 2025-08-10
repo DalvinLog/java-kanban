@@ -1,15 +1,17 @@
+package ru.practicum.tasktracker.model;
+
 public class Task {
     private final String name;
     private final String description;
     private int id;
     private IssueStatuses status;
 
-    Task (String name) {
+    public Task (String name) {
         this.name = name;
         description = "";
     }
 
-    Task (String name, String description) {
+    public Task (String name, String description) {
         this.name = name;
         this.description = description;
     }

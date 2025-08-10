@@ -1,17 +1,19 @@
+package ru.practicum.tasktracker.model;
+
 public class Subtask extends Task{
     private final int epicId;
 
-    Subtask (String name, int epicId) {
+    public Subtask (String name, int epicId) {
         super(name);
         this.epicId = epicId;
     }
 
-    Subtask (String name, String description, int epicId) {
+    public Subtask (String name, String description, int epicId) {
         super(name, description);
         this.epicId = epicId;
     }
 
-    int getEpicId() {
+    public int getEpicId() {
         return epicId;
     }
 
