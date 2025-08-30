@@ -1,13 +1,14 @@
 package ru.practicum.tasktracker;
 
-import ru.practicum.tasktracker.manager.TaskManager;
+import ru.practicum.tasktracker.manager.*;
 import ru.practicum.tasktracker.model.*;
+import ru.practicum.tasktracker.util.Managers;
 
 public class Main {
     static TaskManager taskManager;
 
     public static void main(String[] args) {
-        taskManager = new TaskManager();
+        taskManager = Managers.getDefault();
         Task task1 = new Task("Помыть посуду", "Не забыть про любимую кружку");
         task1.setStatus(IssueStatuses.NEW);
         Task task2 = new Task("Убраться в комнате");
@@ -62,9 +63,26 @@ public class Main {
     }
 
     static void printAllTasks() {
+
+        System.out.println("Задачи:");
+        for (Task task : taskManager.getAllTasks()) {
+            System.out.println(task);
+        }
+        System.out.println("Эпики:");
+        for (Task epic : taskManager.getAllEpics()) {
+            System.out.println(epic);
+
+            System.out.println("Подзадачи:");
+            for (Task subTask : taskManager.getSubtasksOfEpic(epic.getId())) {
+                System.out.println("--> " + subTask);
+            }
+        }
+
+        System.out.println("История:");
+        for (Task task : taskManager.getHistory()) {
+            System.out.println(task);
+        }
+
         System.out.println("-".repeat(20));
-        System.out.println(taskManager.getAllTasks());
-        System.out.println(taskManager.getAllEpics());
-        System.out.println(taskManager.getAllSubtasks());
     }
 }

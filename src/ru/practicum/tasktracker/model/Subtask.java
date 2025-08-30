@@ -18,6 +18,14 @@ public class Subtask extends Task{
     }
 
     @Override
+    public Task cloneTask(){
+        Subtask subtask = new Subtask(getName(), getDescription(), epicId);
+        subtask.setStatus(getStatus());
+        subtask.setId(getId());
+        return subtask;
+    }
+
+    @Override
     public String toString() {
         return "Subtask{name=" + getName()
                 + ", description=" + getDescription()

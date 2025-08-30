@@ -1,8 +1,9 @@
 package ru.practicum.tasktracker.model;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Epic extends Task {
-    private final ArrayList<Integer> subtasksId;
+    private final List<Integer> subtasksId;
 
     public Epic (String name) {
         super(name);
@@ -28,8 +29,19 @@ public class Epic extends Task {
     }
 
     //получить список подзадач
-    public ArrayList<Integer> getSubtasksId() {
+    public List<Integer> getSubtasksId() {
         return subtasksId;
+    }
+
+    @Override
+    public Task cloneTask(){
+        Epic epic = new Epic(getName(), getDescription());
+        epic.setStatus(getStatus());
+        epic.setId(getId());
+        for (int id: subtasksId) {
+            epic.addSubtaskId(id);
+        }
+        return epic;
     }
 
     @Override
