@@ -1,6 +1,7 @@
 package ru.practicum.tasktracker.manager;
 
 import ru.practicum.tasktracker.model.*;
+import ru.practicum.tasktracker.util.Managers;
 
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -14,8 +15,8 @@ public class InMemoryTaskManager implements TaskManager {
     private final Map<Integer, Subtask> subtasks;
     private final HistoryManager historyManager;
 
-    public InMemoryTaskManager(HistoryManager historyManager) {
-        this.historyManager = historyManager;
+    public InMemoryTaskManager() {
+        this.historyManager = Managers.getDefaultHistory();
         tasks = new HashMap<>();
         epics = new HashMap<>();
         subtasks = new HashMap<>();
@@ -24,20 +25,16 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public int createTask(Task task) {
         id += 1;
-        Task newTask = new Task(task.getName(), task.getDescription());
-        newTask.setStatus(task.getStatus());
-        newTask.setId(id);
-        tasks.put(id, newTask);
+        task.setId(id);
+        tasks.put(id, task);
         return id;
     }
 
     @Override
     public int createEpic(Epic epic) {
         id += 1;
-        Epic newEpic = new Epic(epic.getName(), epic.getDescription());
-        newEpic.setStatus(epic.getStatus());
-        newEpic.setId(id);
-        epics.put(id, newEpic);
+        epic.setId(id);
+        epics.put(id, epic);
         return id;
     }
 
@@ -47,11 +44,8 @@ public class InMemoryTaskManager implements TaskManager {
         if (!epics.containsKey(epicId)) return -1;
 
         id += 1;
-
-        Subtask newSubtask = new Subtask(subtask.getName(), subtask.getDescription(), subtask.getEpicId());
-        newSubtask.setStatus(subtask.getStatus());
-        newSubtask.setId(id);
-        subtasks.put(id, newSubtask);
+        subtask.setId(id);
+        subtasks.put(id, subtask);
 
         Epic epic = epics.get(epicId);
         epic.addSubtaskId(id);
@@ -68,6 +62,7 @@ public class InMemoryTaskManager implements TaskManager {
         return true;
     }
 
+    //Если вернуть старую реализацию методов обновления, то некоторые тесты не могут быть пройдены
     @Override
     public boolean updateEpic(Epic newEpic) {
         int epicId = newEpic.getId();
@@ -86,7 +81,7 @@ public class InMemoryTaskManager implements TaskManager {
         int subtaskId = newSubtask.getId();
         if (!subtasks.containsKey(subtaskId)) return false;
 
-        Subtask subtask =  subtasks.get(subtaskId);
+        Subtask subtask = subtasks.get(subtaskId);
 
         subtask.setName(newSubtask.getName());
         subtask.setDescription(newSubtask.getDescription());
