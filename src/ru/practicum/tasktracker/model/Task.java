@@ -8,12 +8,12 @@ public class Task {
     private int id;
     private IssueStatuses status;
 
-    public Task (String name) {
+    public Task(String name) {
         this.name = name;
         description = "";
     }
 
-    public Task (String name, String description) {
+    public Task(String name, String description) {
         this.name = name;
         this.description = description;
     }

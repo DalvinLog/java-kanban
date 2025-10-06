@@ -1,16 +1,17 @@
 package ru.practicum.tasktracker.model;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Epic extends Task {
     private final List<Integer> subtasksId;
 
-    public Epic (String name) {
+    public Epic(String name) {
         super(name);
         subtasksId = new ArrayList<>();
     }
 
-    public Epic (String name, String description) {
+    public Epic(String name, String description) {
         super(name, description);
         subtasksId = new ArrayList<>();
     }
@@ -34,11 +35,11 @@ public class Epic extends Task {
     }
 
     @Override
-    public Task cloneTask(){
+    public Task cloneTask() {
         Epic epic = new Epic(getName(), getDescription());
         epic.setStatus(getStatus());
         epic.setId(getId());
-        for (int id: subtasksId) {
+        for (int id : subtasksId) {
             epic.addSubtaskId(id);
         }
         return epic;
