@@ -137,6 +137,26 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
+    public void theHistoryManagerSavesTheHistoryCorrectly(){
+        Task task1 = new Task("Выкинуть мусор");
+        int task1Id = taskManager.createTask(task1);
+
+        Epic epic1 = new Epic("Сходить в магазин");
+        int epic1Id = taskManager.createEpic(epic1);
+
+        taskManager.getTask(task1Id);
+        taskManager.getEpic(epic1Id);
+        taskManager.getTask(task1Id);
+
+        List<Task> historyList = taskManager.getHistory();
+
+        System.out.println(historyList);
+
+        assertEquals("Выкинуть мусор", historyList.getLast().getName());
+        assertEquals("Сходить в магазин", historyList.getFirst().getName());
+    }
+
+    @Test
     public void theHistoryManagerSavesThePreviousVersionOfTheTask(){
         Task newTask1 = new Task("Выкинуть мусор");
         int taskId = taskManager.createTask(newTask1);
@@ -152,5 +172,38 @@ class InMemoryTaskManagerTest {
         List<Task> historyList = taskManager.getHistory();
 
         assertEquals("Выкинуть мусор", historyList.getFirst().getName());
+    }
+
+
+    @Test
+    public void SubtasksAreDeletedAlongWithTheEpic(){
+        Task task1 = new Task("Помыть посуду", "Не забыть про любимую кружку");
+        task1.setStatus(IssueStatuses.NEW);
+        int task1Id = taskManager.createTask(task1);
+
+        Epic epic1 = new Epic("Сходить в магазин");
+        int epic1Id = taskManager.createEpic(epic1);
+
+        Subtask subtask1 = new Subtask("Купить макароны", epic1Id);
+        subtask1.setStatus(IssueStatuses.NEW);
+        int subtask1Id = taskManager.createSubtask(subtask1);
+
+        Subtask subtask2 = new Subtask("Купить сыр", "Маздам", epic1Id);
+        subtask2.setStatus(IssueStatuses.NEW);
+        int subtask2Id = taskManager.createSubtask(subtask2);
+
+        taskManager.getTask(task1Id);
+        taskManager.getEpic(epic1Id);
+        taskManager.getSubtask(subtask1Id);
+        taskManager.getSubtask(subtask2Id);
+
+        List<Task> historyList = taskManager.getHistory();
+        assertEquals("Купить сыр", historyList.getLast().getName());
+
+        taskManager.deleteEpic(epic1Id);
+
+        historyList = taskManager.getHistory();
+
+        assertEquals("Помыть посуду", historyList.getLast().getName());
     }
 }
