@@ -38,7 +38,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void epicCannotBeAddedToItself(){
+    public void epicCannotBeAddedToItself() {
         Epic newEpic1 = new Epic("Сходить в магазин");
         taskManager.createEpic(newEpic1);
 
