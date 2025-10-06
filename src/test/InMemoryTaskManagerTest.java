@@ -43,12 +43,12 @@ class InMemoryTaskManagerTest {
         taskManager.createEpic(newEpic1);
 
         Epic newEpic2 = new Epic("Приготовить ужин");
-        int Epic2Id = taskManager.createEpic(newEpic2);
+        int epic2Id = taskManager.createEpic(newEpic2);
 
         Epic epic1 = new Epic("Сходить в магазин");
         epic1.setId(1);
 
-        epic1.addSubtaskId(Epic2Id);
+        epic1.addSubtaskId(epic2Id);
         taskManager.updateEpic(epic1);
 
         Epic epic = taskManager.getEpic(epic1.getId());
@@ -57,7 +57,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void subtaskCannotBeAddedToItself(){
+    public void subtaskCannotBeAddedToItself() {
         Epic newEpic = new Epic("Сходить в магазин");
         int epicId = taskManager.createEpic(newEpic);
 
@@ -72,7 +72,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void itIsNotPossibleToSetTheIdForTasksInAdvance(){
+    public void itIsNotPossibleToSetTheIdForTasksInAdvance() {
         Task newTask = new Task("Выкинуть мусор");
         newTask.setId(5);
         int taskId = taskManager.createTask(newTask);
@@ -95,7 +95,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void theTaskRemainsUnchangedAfterBeingAddedToTheManager(){
+    public void theTaskRemainsUnchangedAfterBeingAddedToTheManager() {
         Task newTask = new Task("Съездить на собеседование", "На такси");
         newTask.setStatus(IssueStatuses.IN_PROGRESS);
         int taskId = taskManager.createTask(newTask);
@@ -108,7 +108,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void theEpicRemainsUnchangedAfterBeingAddedToTheManager(){
+    public void theEpicRemainsUnchangedAfterBeingAddedToTheManager() {
         Epic newEpic = new Epic("Подготовиться к экзамену", "До завтра");
         newEpic.setStatus(IssueStatuses.NEW);
         int epicId = taskManager.createEpic(newEpic);
@@ -121,7 +121,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void theSubtaskRemainsUnchangedAfterBeingAddedToTheManager(){
+    public void theSubtaskRemainsUnchangedAfterBeingAddedToTheManager() {
         Epic newEpic = new Epic("Подготовиться к экзамену");
         int epicId = taskManager.createEpic(newEpic);
 
@@ -137,7 +137,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void theHistoryManagerSavesTheHistoryCorrectly(){
+    public void theHistoryManagerSavesTheHistoryCorrectly() {
         Task task1 = new Task("Выкинуть мусор");
         int task1Id = taskManager.createTask(task1);
 
@@ -157,7 +157,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void theHistoryManagerSavesThePreviousVersionOfTheTask(){
+    public void theHistoryManagerSavesThePreviousVersionOfTheTask() {
         Task newTask1 = new Task("Выкинуть мусор");
         int taskId = taskManager.createTask(newTask1);
 
@@ -176,7 +176,7 @@ class InMemoryTaskManagerTest {
 
 
     @Test
-    public void SubtasksAreDeletedAlongWithTheEpic(){
+    public void subtasksAreDeletedAlongWithTheEpic() {
         Task task1 = new Task("Помыть посуду", "Не забыть про любимую кружку");
         task1.setStatus(IssueStatuses.NEW);
         int task1Id = taskManager.createTask(task1);
