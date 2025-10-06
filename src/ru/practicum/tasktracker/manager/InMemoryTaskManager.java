@@ -67,10 +67,10 @@ public class InMemoryTaskManager implements TaskManager {
         int epicId = newEpic.getId();
         if (!epics.containsKey(epicId)) return false;
 
-        Epic Epic = epics.get(epicId);
+        Epic epic = epics.get(epicId);
 
-        Epic.setName(newEpic.getName());
-        Epic.setDescription(newEpic.getDescription());
+        epic.setName(newEpic.getName());
+        epic.setDescription(newEpic.getDescription());
 
         return true;
     }
