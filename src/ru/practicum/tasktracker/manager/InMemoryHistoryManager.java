@@ -1,7 +1,6 @@
 package ru.practicum.tasktracker.manager;
 
 import ru.practicum.tasktracker.model.Task;
-import ru.practicum.tasktracker.model.Node;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,12 +76,24 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
         Node element = head;
 
-        while (true) {
+        while (element != null) {
             taskList.add(element.data);
             element = element.next;
-            if (element == null) {
-                return taskList;
-            }
+        }
+
+        return taskList;
+    }
+
+    private static class Node {
+
+        Task data;
+        Node next;
+        Node prev;
+
+        public Node(Node prev, Task data, Node next) {
+            this.data = data;
+            this.next = next;
+            this.prev = prev;
         }
     }
 }
