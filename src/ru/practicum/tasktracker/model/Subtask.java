@@ -1,14 +1,14 @@
 package ru.practicum.tasktracker.model;
 
-public class Subtask extends Task{
+public class Subtask extends Task {
     private final int epicId;
 
-    public Subtask (String name, int epicId) {
+    public Subtask(String name, int epicId) {
         super(name);
         this.epicId = epicId;
     }
 
-    public Subtask (String name, String description, int epicId) {
+    public Subtask(String name, String description, int epicId) {
         super(name, description);
         this.epicId = epicId;
     }
@@ -18,7 +18,7 @@ public class Subtask extends Task{
     }
 
     @Override
-    public Task cloneTask(){
+    public Task cloneTask() {
         Subtask subtask = new Subtask(getName(), getDescription(), epicId);
         subtask.setStatus(getStatus());
         subtask.setId(getId());

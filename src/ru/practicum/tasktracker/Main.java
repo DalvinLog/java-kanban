@@ -8,7 +8,9 @@ public class Main {
     static TaskManager taskManager;
 
     public static void main(String[] args) {
+
         taskManager = Managers.getDefault();
+
         Task task1 = new Task("Помыть посуду", "Не забыть про любимую кружку");
         task1.setStatus(IssueStatuses.NEW);
         Task task2 = new Task("Убраться в комнате");
@@ -27,39 +29,33 @@ public class Main {
         subtask2.setStatus(IssueStatuses.NEW);
         int subtask2Id = taskManager.createSubtask(subtask2);
 
-        Epic epic2 = new Epic("Приготовить ужин", "Вкусный!");
-        int epic2Id = taskManager.createEpic(epic2);
-
-        Subtask subtask3 = new Subtask("Приготовить макароны с сыром", epic2Id);
+        Subtask subtask3 = new Subtask("Купить мясо", epic1Id);
         subtask3.setStatus(IssueStatuses.NEW);
         int subtask3Id = taskManager.createSubtask(subtask3);
 
-        printAllTasks();
+        Epic epic2 = new Epic("Приготовить ужин", "Вкусный!");
+        int epic2Id = taskManager.createEpic(epic2);
 
-        task1 = taskManager.getTask(task1Id);
-        task2 = taskManager.getTask(task2Id);
-        task1.setStatus(IssueStatuses.DONE);
-        task2.setStatus(IssueStatuses.IN_PROGRESS);
-        taskManager.updateTask(task1);
-        taskManager.updateTask(task2);
+        taskManager.getTask(task1Id);
+        printHistory();
+        taskManager.getTask(task2Id);
+        printHistory();
+        taskManager.getTask(task1Id);
+        printHistory();
 
-        subtask1 = taskManager.getSubtask(subtask1Id);
-        subtask2 = taskManager.getSubtask(subtask2Id);
-        subtask3 = taskManager.getSubtask(subtask3Id);
-        subtask1.setStatus(IssueStatuses.DONE);
-        subtask2.setStatus(IssueStatuses.IN_PROGRESS);
-        subtask3.setStatus(IssueStatuses.DONE);
+        taskManager.getEpic(epic1Id);
+        printHistory();
+        taskManager.getSubtask(subtask1Id);
+        printHistory();
+        taskManager.getSubtask(subtask2Id);
+        printHistory();
 
-        taskManager.updateSubtask(subtask1);
-        taskManager.updateSubtask(subtask2);
-        taskManager.updateSubtask(subtask3);
 
-        printAllTasks();
+        taskManager.deleteTask(task2Id);
+        printHistory();
 
-        taskManager.deleteTask(task1Id);
         taskManager.deleteEpic(epic1Id);
-
-        printAllTasks();
+        printHistory();
     }
 
     static void printAllTasks() {
@@ -78,6 +74,10 @@ public class Main {
             }
         }
 
+        printHistory();
+    }
+
+    static void printHistory() {
         System.out.println("История:");
         for (Task task : taskManager.getHistory()) {
             System.out.println(task);
